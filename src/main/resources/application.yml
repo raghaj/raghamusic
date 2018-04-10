@@ -1,0 +1,42 @@
+spring:
+  data:
+    cassandra:
+      keyspace-name: eligibility_api
+      contact-points: localhost
+
+
+management:
+  server:
+    port: 9080
+  endpoints:
+    web:
+      exposure:
+       include: prometheus,health
+  metrics:
+    distribution:
+      percentiles-histogram:
+        http:
+          server:
+            requests: true
+
+---
+spring:
+  profiles: default
+  data:
+    cassandra:
+      port: 9042
+
+---
+spring:
+  profiles: docker-local
+  data:
+    cassandra:
+      port: 9042
+      contact-points: cassandra
+
+---
+spring:
+  profiles: integration-test
+  data:
+    cassandra:
+      port: 9142
